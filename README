@@ -3,6 +3,10 @@ Sample REST client based on http://blog.springsource.org/2009/03/27/rest-in-spri
 Updated for release 3.1 of Spring.
 
 To build and run:
+mvn exec:java -Dexec.mainClass="com.springsource.samples.resttemplate.Driver" -Dexec.args="[your key here] penguin"
+
+
+What I had figured out to build & run before I read the comments on the blog post:
 
 mvn compile
 mvn jar:jar
