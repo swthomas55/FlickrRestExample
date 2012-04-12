@@ -1,0 +1,14 @@
+Sample REST client based on http://blog.springsource.org/2009/03/27/rest-in-spring-3-resttemplate/
+
+Updated for release 3.1 of Spring.
+
+To build and run:
+
+mvn compile
+mvn jar:jar
+
+(Probably could reduce that to one step by putting the jar:jar task into an appropriate lifecycle step in the POM file.)
+
+ln -s <your-maven-repository-path> target/lib
+java -jar target/resttemplate-1.0-SNAPSHOT.jar  your-flickr-api-key tags,to,search,for
+
