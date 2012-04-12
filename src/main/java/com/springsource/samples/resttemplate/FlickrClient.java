@@ -30,6 +30,7 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.xml.xpath.NodeMapper;
 import org.springframework.xml.xpath.XPathOperations;
@@ -59,14 +60,20 @@ public class FlickrClient {
         final String photoUrl = "http://static.flickr.com/{server}/{id}_{secret}_m.jpg";
         return (List<BufferedImage>) xpathTemplate.evaluate("//photo", photos, new NodeMapper() {
             public Object mapNode(Node node, int i) throws DOMException {
-                Element photo = (Element) node;
+                try {
+					Element photo = (Element) node;
 
-                Map<String, String> variables = new HashMap<String, String>(3);
-                variables.put("server", photo.getAttribute("server"));
-                variables.put("id", photo.getAttribute("id"));
-                variables.put("secret", photo.getAttribute("secret"));
+					Map<String, String> variables = new HashMap<String, String>(3);
+					variables.put("server", photo.getAttribute("server"));
+					variables.put("id", photo.getAttribute("id"));
+					variables.put("secret", photo.getAttribute("secret"));
 
-                return restTemplate.getForObject(photoUrl, BufferedImage.class, variables);
+					return restTemplate.getForObject(photoUrl, BufferedImage.class, variables);
+				} catch (java.awt.color.CMMException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return null;
+				}
             }
         });
     }
@@ -75,7 +82,8 @@ public class FlickrClient {
         JFrame frame = new JFrame(searchTerm + " photos");
         frame.setLayout(new GridLayout(2, imageList.size() / 2));
         for (BufferedImage image : imageList) {
-            frame.add(new JLabel(new ImageIcon(image)));
+        	if (image != null)
+        		frame.add(new JLabel(new ImageIcon(image)));
         }
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
