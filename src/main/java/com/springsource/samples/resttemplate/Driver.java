@@ -31,7 +31,7 @@ public class Driver {
 
         ApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("applicationContext.xml", Driver.class);
-        FlickrClient client = applicationContext.getBean("flickrClient", FlickrClient.class);
+        FlickrClient client = (FlickrClient) applicationContext.getBean("flickrClient", FlickrClient.class);
         client.doIt(apiKey, searchTerm);
     }
 
