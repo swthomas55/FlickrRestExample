@@ -54,7 +54,7 @@ public class FlickrClient {
     @SuppressWarnings("unchecked")
     private List<BufferedImage> searchPhotos(String apiKey, String searchTerm) {
         String photoSearchUrl =
-                "http://www.flickr.com/services/rest?method=flickr.photos.search&api+key={api-key}&tags={tag}&per_page=10";
+                "http://www.flickr.com/services/rest?method=flickr.photos.search&api_key={api-key}&tags={tag}&per_page=10&tag_mode=all";
         Source photos = restTemplate.getForObject(photoSearchUrl, Source.class, apiKey, searchTerm);
 
         final String photoUrl = "http://static.flickr.com/{server}/{id}_{secret}_m.jpg";
